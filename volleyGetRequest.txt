@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
                                 try {
                                     String server_data = response.toString();
                                     JSONObject object = new JSONObject(server_data);
-                                    textView.setText(object.getString("id"));
+                                    textView.setText(object.getString("name"));
                                     Log.e("data", response.toString());
                                 } catch (Exception e) {
                                     e.printStackTrace();
