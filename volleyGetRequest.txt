@@ -1,0 +1,47 @@
+public class MainActivity extends AppCompatActivity {
+
+    Button button;
+    TextView textView;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        textView = findViewById(R.id.textView);
+        button = findViewById(R.id.button);
+        final String url7 = "your server url";
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
+
+                JsonObjectRequest jsonObjectRequest = new
+                        JsonObjectRequest(Request.Method.GET,url7,
+                        new JSONObject(),
+                        new com.android.volley.Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                try {
+                                    String server_data = response.toString();
+                                    JSONObject object = new JSONObject(server_data);
+                                    textView.setText(object.getString("id"));
+                                    Log.e("data", response.toString());
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+
+                            }
+                        }, new com.android.volley.Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("error8", error.toString());
+                    }
+                });
+
+                queue.add(jsonObjectRequest);
+
+            }
+        });
+    }
